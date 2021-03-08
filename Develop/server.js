@@ -13,10 +13,11 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/userdb", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/userdb", { useNewUrlParser: true });
 
 require('./routes/htmlRoutes')(app);
-require('./routes/htmlRoutes')(app);
+require('./routes/apiRoutes')(app);
+
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}.`);
