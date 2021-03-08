@@ -1,18 +1,15 @@
 const mongoose = require("mongoose");
 
 const CardioSchema = new mongoose.Schema({
-    distance: {
-        type: Number,
-    },
-    duration: {
-        type: Number,
-    },
+    distance: Number,
+    duration: Number,
     name: {
         type: String,
         trim: true
     },
     type: {
-        type: String
+        type: String,
+        trim: true
     }
 })
 
