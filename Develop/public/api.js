@@ -22,6 +22,7 @@ const API = {
 
     return json;
   },
+  // Creates a unique workout document in the Workouts collection.
   async createWorkout(data = {}) {
     const res = await fetch("/api/workouts", {
       method: "POST",
