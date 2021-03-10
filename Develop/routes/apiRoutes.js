@@ -17,26 +17,32 @@ module.exports = (app) => {
 
     // body contains data that will be put into a new cardio/resistance document.
     // .create(body) works because body's keys match with that of each document in the Cardios/Resistances collection.
-    app.put('/api/workouts', ({body}, res) => {
+    app.put('/api/workouts', ({ body }, res) => {
         let workout_ID = body.id;
 
         // Next step: Push new info to workout document with above workout_id.
-
-        console.log("workout id:", workout_ID);
-        /*if (body.type === 'cardio') {
-            Cardio.create(body).then(dbWorkouts => {
-                res.json(dbWorkouts);
-            }).catch(error => {
-                res.json(error);
-            });
+        if (body.type === 'cardio') {
+            Cardio.create(body)
+                // findOneAndUpdate returns the updated doc: In this case, the updated Workout doc.
+                // The returned Workout doc gets sent in the response: res.json(dbWorkouts).
+                .then(cardioDocument => Workout.findOneAndUpdate({ _id: workout_ID },
+                    { $push: { cardio: cardioDocument._id } }, { new: true }))
+                .then(dbWorkouts => {
+                    res.json(dbWorkouts);
+                }).catch(error => {
+                    res.json(error);
+                });
         }
         else {
-            Resistance.create(body).then(dbWorkouts => {
-                res.json(dbWorkouts);
-            }).catch(error => {
-                res.json(error);
-            });
-        }*/
+            Resistance.create(body)
+                .then(resistanceDocument => Workout.findOneAndUpdate({ _id: workout_ID },
+                    { $push: { resistance: resistanceDocument._id } }, { new: true }))
+                .then(dbWorkouts => {
+                    res.json(dbWorkouts);
+                }).catch(error => {
+                    res.json(error);
+                });
+        }
 
     });
 
