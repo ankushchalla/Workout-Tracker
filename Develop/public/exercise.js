@@ -100,7 +100,6 @@ function validateInputs() {
 
 async function handleFormSubmit(event) {
   event.preventDefault();
-
   let workoutData = {};
   const urlParams = new URLSearchParams(window.location.search);
   workoutData.id = urlParams.get('id');

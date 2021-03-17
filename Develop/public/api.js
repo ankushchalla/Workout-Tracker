@@ -8,7 +8,7 @@ const API = {
     }
     const json = await res.json();
 
-    return json[json.length - 1];
+    return json;
   },
   async addExercise(data) {
     // const id = location.search.split("=")[1];
@@ -36,6 +36,7 @@ const API = {
   },
 
   async getWorkoutsInRange() {
+    // The range is always 7. 
     const res = await fetch(`/api/workouts/range`);
     const json = await res.json();
 
