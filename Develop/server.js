@@ -13,13 +13,11 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/userdb", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout_tracker", { useNewUrlParser: true, useUnifiedTopology: true });
 
-require('./routes/htmlRoutes')(app);
-require('./routes/apiRoutes')(app);
-
+require('./routes/api_routes')(app);
+require('./routes/html_routes')(app);
 
 app.listen(PORT, () => {
-    console.log(`App running on port ${PORT}.`);
-});
-
+    console.log(`App running on port ${PORT}!`);
+  });

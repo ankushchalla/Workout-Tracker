@@ -8,11 +8,12 @@ const API = {
     }
     const json = await res.json();
 
-    return json;
+    return json[json.length - 1];
   },
   async addExercise(data) {
-    // const id = location.search.split("=")[1];
-    const res = await fetch("/api/workouts/", {
+    const id = location.search.split("=")[1];
+
+    const res = await fetch("/api/workouts/" + id, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -22,7 +23,6 @@ const API = {
 
     return json;
   },
-  // Creates a unique workout document in the Workouts collection.
   async createWorkout(data = {}) {
     const res = await fetch("/api/workouts", {
       method: "POST",
@@ -36,7 +36,6 @@ const API = {
   },
 
   async getWorkoutsInRange() {
-    // The range is always 7. 
     const res = await fetch(`/api/workouts/range`);
     const json = await res.json();
 

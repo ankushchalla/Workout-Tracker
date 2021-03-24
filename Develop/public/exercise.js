@@ -21,13 +21,10 @@ async function initExercise() {
   let workout;
 
   if (location.search.split("=")[1] === undefined) {
-    // createWorkout() creates a new empty workout document in the Workouts collection in the db.
-    // This document will be filled after user fills form.
-    workout = await API.createWorkout();
+    workout = await API.createWorkout()
+    console.log("workout created:", workout)
   }
   if (workout) {
-    // workout contains '_id' created automatically by Mongo.
-    // setting new querystring results in GET request to '/api/workouts/?id=workout._id'.
     location.search = "?id=" + workout._id;
   }
 
@@ -100,9 +97,9 @@ function validateInputs() {
 
 async function handleFormSubmit(event) {
   event.preventDefault();
+
   let workoutData = {};
-  const urlParams = new URLSearchParams(window.location.search);
-  workoutData.id = urlParams.get('id');
+
   if (workoutType === "cardio") {
     workoutData.type = "cardio";
     workoutData.name = cardioNameInput.value.trim();

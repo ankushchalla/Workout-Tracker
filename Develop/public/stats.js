@@ -21,11 +21,10 @@ function generatePalette() {
   return arr;
 }
 
-// Expects data to be array of objects. 
 function populateChart(data) {
-  let durations = data.workoutDurations;
-  let pounds = data.workoutTotalWeights;
-  let workouts = data.uniqueExercises;
+  let durations = data.map(({ totalDuration }) => totalDuration);
+  let pounds = calculateTotalWeight(data);
+  let workouts = workoutNames(data);
   const colors = generatePalette();
 
   let line = document.querySelector('#canvas').getContext('2d');
@@ -43,7 +42,7 @@ function populateChart(data) {
     'Saturday',
   ];
 
-  const labels = data.days.map(day => {
+  const labels = data.map(({ day }) => {
     const date = new Date(day);
     return daysOfWeek[date.getDay()];
   });
