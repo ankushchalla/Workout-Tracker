@@ -1,8 +1,8 @@
-const Workout = require('../models/Workout')
+const db = require('../models')
 
 module.exports = (app) => {
     app.get('/api/workouts', async (req, res) => {
-        let allWorkouts = await Workout
+        let allWorkouts = await db.Workout
             .aggregate([
                 {
                     $addFields: {
@@ -16,7 +16,7 @@ module.exports = (app) => {
 
     // Creates a new workout mongodb object, in which exercises will be added. 
     app.post('/api/workouts', async (req, res) => {
-        let newWorkout = await Workout.create({});
+        let newWorkout = await db.Workout.create({});
         res.json(newWorkout);
     })
 
@@ -24,14 +24,14 @@ module.exports = (app) => {
     app.put('/api/workouts/:workoutID', async (req, res) => {
         let workoutData = req.body;
 
-        let currentWorkout = await Workout.findOneAndUpdate({ _id: req.params.workoutID },
+        let currentWorkout = await db.Workout.findOneAndUpdate({ _id: req.params.workoutID },
             { $push: { exercises: workoutData } },
             { new: true });
         res.json(currentWorkout);
     })
 
     app.get('/api/workouts/range', async (req, res) => {
-        let lastSevenWorkouts = await Workout
+        let lastSevenWorkouts = await db.Workout
             .aggregate([
                 {
                     $addFields: {
